@@ -21,6 +21,8 @@ void ABasementEvolvePlayerController::PlayerTick(float DeltaTime)
 	{
 		MoveToMouseCursor();
 	}
+
+	MoveWithKeyboard();
 }
 
 void ABasementEvolvePlayerController::SetupInputComponent()
@@ -30,6 +32,10 @@ void ABasementEvolvePlayerController::SetupInputComponent()
 
 	InputComponent->BindAction("SetDestination", IE_Pressed, this, &ABasementEvolvePlayerController::OnSetDestinationPressed);
 	InputComponent->BindAction("SetDestination", IE_Released, this, &ABasementEvolvePlayerController::OnSetDestinationReleased);
+
+	//WSAD movement
+	InputComponent->BindAxis("MoveX", this, &ABasementEvolvePlayerController::Move_XAxis);
+	InputComponent->BindAxis("MoveY", this, &ABasementEvolvePlayerController::Move_YAxis);
 
 	// support touch devices 
 	InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &ABasementEvolvePlayerController::MoveToTouchLocation);
@@ -66,6 +72,14 @@ void ABasementEvolvePlayerController::MoveToMouseCursor()
 			// We hit something, move there
 			SetNewMoveDestination(Hit.ImpactPoint);
 		}
+	}
+}
+
+void ABasementEvolvePlayerController::MoveWithKeyboard()
+{
+	if (ABasementEvolveCharacter* MyPawn = Cast<ABasementEvolveCharacter>(GetPawn()))
+	{
+		UNavigationSystem::SimpleMoveToLocation(this, CurrentVelocity);
 	}
 }
 
@@ -109,4 +123,14 @@ void ABasementEvolvePlayerController::OnSetDestinationReleased()
 {
 	// clear flag to indicate we should stop updating the destination
 	bMoveToMouseCursor = false;
+}
+
+void ABasementEvolvePlayerController::Move_XAxis(float AxisValue)
+{
+	CurrentVelocity.X = FMath::Clamp(AxisValue, -1.0f, 1.0f) * 100.0f;
+}
+
+void ABasementEvolvePlayerController::Move_YAxis(float AxisValue)
+{
+	CurrentVelocity.Y = FMath::Clamp(AxisValue, -1.0f, 1.0f) * 100.0f;
 }

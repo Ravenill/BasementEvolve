@@ -29,6 +29,9 @@ protected:
 	/** Navigate player to the current mouse cursor location. */
 	void MoveToMouseCursor();
 
+	/** Navigate player with keyboard */
+	void MoveWithKeyboard();
+
 	/** Navigate player to the current touch location. */
 	void MoveToTouchLocation(const ETouchIndex::Type FingerIndex, const FVector Location);
 	
@@ -38,6 +41,13 @@ protected:
 	/** Input handlers for SetDestination action. */
 	void OnSetDestinationPressed();
 	void OnSetDestinationReleased();
+
+	// Input functions
+	void Move_XAxis(float AxisValue);
+	void Move_YAxis(float AxisValue);
+
+	// Input variables
+	FVector CurrentVelocity;
 };
 
 
