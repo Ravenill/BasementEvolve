@@ -30,7 +30,7 @@ protected:
 	void MoveToMouseCursor();
 
 	/** Navigate player with keyboard */
-	void MoveWithKeyboard();
+	void MoveWithKeyboard(float DeltaTime);
 
 	/** Navigate player to the current touch location. */
 	void MoveToTouchLocation(const ETouchIndex::Type FingerIndex, const FVector Location);

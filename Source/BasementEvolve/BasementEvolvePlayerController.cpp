@@ -22,7 +22,7 @@ void ABasementEvolvePlayerController::PlayerTick(float DeltaTime)
 		MoveToMouseCursor();
 	}
 
-	MoveWithKeyboard();
+	MoveWithKeyboard(DeltaTime);
 }
 
 void ABasementEvolvePlayerController::SetupInputComponent()
@@ -75,11 +75,11 @@ void ABasementEvolvePlayerController::MoveToMouseCursor()
 	}
 }
 
-void ABasementEvolvePlayerController::MoveWithKeyboard()
+void ABasementEvolvePlayerController::MoveWithKeyboard(float DeltaTime)
 {
 	if (ABasementEvolveCharacter* MyPawn = Cast<ABasementEvolveCharacter>(GetPawn()))
 	{
-		UNavigationSystem::SimpleMoveToLocation(this, CurrentVelocity);
+		UNavigationSystem::SimpleMoveToLocation(this, MyPawn->GetActorLocation() + CurrentVelocity);
 	}
 }
 
