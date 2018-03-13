@@ -12,6 +12,7 @@
 #include "Materials/Material.h"
 
 ABasementEvolveCharacter::ABasementEvolveCharacter()
+: CurrentPlayerVelocity(0, 0, 0)
 {
 	// Set size for player capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -50,6 +51,7 @@ ABasementEvolveCharacter::ABasementEvolveCharacter()
 	}
 	CursorToWorld->DecalSize = FVector(16.0f, 32.0f, 32.0f);
 	CursorToWorld->SetRelativeRotation(FRotator(90.0f, 0.0f, 0.0f).Quaternion());
+	CursorToWorld->bVisible = false;
 
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
@@ -86,4 +88,14 @@ void ABasementEvolveCharacter::Tick(float DeltaSeconds)
 			CursorToWorld->SetWorldRotation(CursorR);
 		}
 	}
+}
+
+void ABasementEvolveCharacter::SetCurrentPlayerVelocityOnXAxis(float Velocity)
+{
+	CurrentPlayerVelocity.X = Velocity;
+}
+
+void ABasementEvolveCharacter::SetCurrentPlayerVelocityOnYAxis(float Velocity)
+{
+	CurrentPlayerVelocity.Y = Velocity;
 }
